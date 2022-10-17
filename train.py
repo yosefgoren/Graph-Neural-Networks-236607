@@ -17,7 +17,7 @@ from util import load_data, separate_data
 from powerful_gnns.models.graphcnn import GraphCNN
 from utils import collision_probability
 
-
+from torch.utils.data import DataLoader
 
 
 class AverageMeter(object):
@@ -195,7 +195,12 @@ def main():
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(0)
 
-    graphs, num_classes = load_data(args.dataset, args.degree_as_tag)
+    #load dataset
+    dataset = GraphDatset(num_nodes = 1024, edge_prob = 0.5, seed = 22000)
+    #create dataloader
+    graph_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
+
+
 
     ##10-fold cross validation. Conduct an experiment on the fold specified by args.fold_idx.
     train_graphs, test_graphs = separate_data(graphs, args.seed, args.fold_idx)
