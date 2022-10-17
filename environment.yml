@@ -1,0 +1,20 @@
+name: GNN
+channels:
+  - pytorch
+  - pyg
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - pytorch
+  - numpy
+  - pandas 
+  - torchvision
+  - cudatoolkit=11.3
+  - matplotlib
+  - seaborn
+  - plotly
+  - pyg
+  - tqdm
+  - ipykernel
+  - trimesh

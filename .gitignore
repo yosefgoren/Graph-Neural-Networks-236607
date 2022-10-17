@@ -4,3 +4,5 @@ main.fdb_latexmk
 main.fls
 main.log
 main.aux
+results
+results_grid_test__pycache__/

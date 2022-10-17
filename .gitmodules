@@ -1,0 +1,3 @@
+[submodule "powerful-gnns"]
+	path = powerful_gnns
+	url = https://github.com/weihua916/powerful-gnns
