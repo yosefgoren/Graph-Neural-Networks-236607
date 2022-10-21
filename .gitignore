@@ -5,4 +5,8 @@ main.fls
 main.log
 main.aux
 results
-results_grid_test__pycache__/
+model.pt
+results/
+results_trained/
+results_grid_test
+__pycache__/

@@ -5,6 +5,9 @@ import os
 
 import numpy as np
 
+INPUT_DIM = 128
+
+
 
 def collision_probability(values):
     counter = Counter(values)

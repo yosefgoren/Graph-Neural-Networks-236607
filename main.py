@@ -8,7 +8,7 @@ import networkx as nx
 import json
 from collections import defaultdict
 from multiprocessing import Pool, Process
-from utils import collision_probability, calc_collision_stats
+from utils import INPUT_DIM, collision_probability, calc_collision_stats
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -19,7 +19,6 @@ import sys
 import time
 from functools import partial
 
-INPUT_DIM = 128
 
 from time import sleep
 
@@ -28,7 +27,8 @@ def wl_experiment(num_nodes=1024,
                   network_size=2,
                   seed=42,
                   num_permutations=200,
-                  results_base_path='results'):
+                  results_base_path='results',
+                  model_path=None):
 
     print("started")
 
@@ -55,6 +55,10 @@ def wl_experiment(num_nodes=1024,
     model = GraphCNN(**model_parms).to(device)
     model.eval()
 
+    if model_path is not None:
+        model.load_state_dict(torch.load(model_path, map_location=device))
+
+
     print()
 
     node_features = torch.rand((num_nodes, INPUT_DIM), device=device)
@@ -69,22 +73,9 @@ def wl_experiment(num_nodes=1024,
     for i in tqdm(range(num_permutations)):
         permutation = get_graph(i)
 
-        graph = S2VGraph(permutation, None, None, node_features)
+        graph = S2VGraph(device, permutation, None, None, node_features)
 
-        edges = [list(pair) for pair in permutation.edges()]
-        edges.extend([[i, j] for j, i in edges])
-        graph.edge_mat = torch.LongTensor(edges).transpose(0, 1).to(device)
-
-        graph.neighbors = [[] for i in range(len(permutation))]
-        for i, j in permutation.edges():
-            graph.neighbors[i].append(j)
-            graph.neighbors[j].append(i)
-        degree_list = []
-        for i in range(len(permutation)):
-            graph.neighbors[i] = graph.neighbors[i]
-            degree_list.append(len(graph.neighbors[i]))
-        graph.max_neighbor = max(degree_list)
-
+        
         with torch.inference_mode():
             model_outputs.append(model([graph]))
 
@@ -190,12 +181,21 @@ if __name__ == '__main__':
     #                   num_permutations=200)
 
 
-    for num_nodes in [64, 128, 512, 1024, 2048]:
-        for p in [0.1, 0.25, 0.5, 0.75, 0.9]:
-            for network_size in [1, 3, 5, 7]:
-                wl_experiment(num_nodes=num_nodes, 
-                              edge_prob=p,
-                              network_size=network_size,
-                              seed=12345,
-                              num_permutations=200,
-                              results_base_path='results_grid_test')
+    # for num_nodes in [64, 128, 512, 1024, 2048]:
+    #     for p in [0.1, 0.25, 0.5, 0.75, 0.9]:
+    #         for network_size in [1, 3, 5, 7]:
+    #             wl_experiment(num_nodes=num_nodes, 
+    #                           edge_prob=p,
+    #                           network_size=network_size,
+    #                           seed=12345,
+    #                           num_permutations=200,
+    #                           results_base_path='results_grid_test')
+
+
+    wl_experiment(num_nodes=1024,
+                  edge_prob=0.5,
+                  network_size=2,
+                  seed=42,
+                  num_permutations=200,
+                  results_base_path='results_trained',
+                  model_path="model.pt")
