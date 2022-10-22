@@ -1,0 +1,132 @@
+\documentclass{article}
+% basics
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{graphicx}
+
+% unique math expressions:
+\usepackage{amsmath}
+\DeclareMathOperator*{\andloop}{\wedge}
+\DeclareMathOperator*{\pr}{Pr}
+\DeclareMathOperator*{\approach}{\longrightarrow}
+\DeclareMathOperator*{\eq}{=}
+
+% grey paper
+\usepackage{xcolor}
+\pagecolor[rgb]{0.11,0.11,0.11}
+\color{white}
+
+% embedded code sections
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+\author{Yosef Goren - Or Rubin}
+\title{Graph Seperation - Final Report}
+\maketitle
+\part*{Abstract}
+
+\part*{Introduction}
+A famous result in the theory of message passing networks (MPNs) states
+that their expressive power is equal to the 1-WL isomorphism test.
+More accurately, MPNs is a general framework for graph neural networks that can be
+instatiated in many ways. While any realization of an MPN cannot separate
+graphs unless they are separable by the WL isomorphism test, the converse
+claim can be showed to be true for specific MPN constructions. The two clas-
+sical constructions of MPNs which are equivalent to WL are by Xu [2] and by
+Morris [1].
+
+In this project we will focus on the construction by Xu and a disadvantage
+of this construction. A follow up project (e.g., for thesis) would aim to fix these
+disadvantage, for example by using a sorting based MPN construction.
+
+
+A key result for the proof of separation of GINs in Lemma 5. The lemma
+states that if $\mathcal{X}$ is a countable set and N is a fixed natural number, there
+A key result for the proof of separation of GINs in Lemma 5. The lemma
+states that if $\mathcal{X}$ is a countable set and N is a fixed natural number, there
+exists a function $f : \mathcal{X} \rightarrow R$ such that, for every $\mathcal{X}1, \mathcal{X}2 \subseteq \mathcal{X}$
+of size < N ,exists a function $f : \mathcal{X} \rightarrow R$ such that, for every
+$\mathcal{X}1, \mathcal{X}2 \subseteq \mathcal{X}$ of size $\leq N$.
+
+\input{text/proof_a.tex}
+
+\part*{Methods}
+\section*{Metrics}
+To determine the quality of seperation yeilded by the model, we have considered a few metrics.\\
+Note that we are using a finite size of $\mathcal{X}$ in these tests. Hence, $\mathcal{X}$
+is also a finite set in the definitions of these metrics (the metrics are a function of both the model and the test sample).
+\begin{itemize}
+    \item Given a model $M:\mathcal{X}\rightarrow\mathbb{R}$, 
+    we will look at $M^{-1}:\mathbb{R}\rightarrow\mathcal{X}$ s.t. 
+    $\forall r\in\mathbb{R}, M^{-1}(r)=\{x\in\mathcal{X}:M(x)=r\}$.
+
+    The first metric is calculated as follows:
+    \[
+        \frac{\sum_{r\in\mathbb{R}\wedge |M^{-1}(r)|>1}|M^{-1}(r)|}
+        {|\mathcal{X}|}
+    \]
+
+    This metric is the propotion between the number of elements 
+    that are collided and the total number of elements in the test set.
+    
+    We will refer to this as the 'count metric'.
+
+    \item The second metric is the probability of collision
+    between two uniformly sampled samples from the test set.
+    This metric can be calculated as follows:
+
+    \[
+        \frac{\sum_{r\in\mathbb{R}\wedge M^{-1}(r)\neq\emptyset}|M^{-1}(r)|\cdot\left(|M^{-1}(r)|-1\right)}
+        {|\mathcal{X}|\cdot\left(|\mathcal{X}|-1\right)}
+    \]
+
+    We will refer to this metric as the 'probability metric'.
+
+
+    \section*{Training}
+    Since we aim to prevert collisions, an intuative huristic at achiving this would be to keep
+    outputs as distant as possible.
+    Hence, we suggest the loss to be the negative distance between the outputs of the model:
+    \[
+        L(G_1,G_2)=-|M(G_1)-M(G_2)|    
+    \]
+
+    In order to train our GIN model, we followed the Xu [2].
+
+
+\end{itemize}
+
+\part*{Experiments}
+
+\part*{Conclusion}
+
+\part*{Future Work}
+
+\part*{References}
+[1] Morris, D. (2019). Message Passing Neural Networks. arXiv preprint arXiv:1910.00825.
+[2] Xu, K., Li, W., \& Leskovec, J. (2019). How Powerful are Graph Neural Networks?. arXiv preprint arXiv:1810.00826.
+
+\end{document}
