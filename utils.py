@@ -14,6 +14,9 @@ def collision_probability(values):
     values_num = len(values)
     return sum([(v * (v - 1)) for v in counter.values()]) / (values_num * (values_num - 1))
 
+def collision_count(values):
+    counter = Counter(values)
+    return sum([v for v in counter.values() if v > 1]) / len(values)
 
 
 def calc_collision_stats(values, group_num = 10):
