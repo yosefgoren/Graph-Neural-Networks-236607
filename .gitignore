@@ -10,3 +10,8 @@ results/
 results_trained/
 results_grid_test
 __pycache__/
+figures/
+graphs/
+figures.zip
+results.zip
+performance.png
