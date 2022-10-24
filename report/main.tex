@@ -50,21 +50,21 @@
 
 \begin{document}
 \author{Yosef Goren - Or Rubin}
-\title{Graph Seperation - Final Report}
+\title{Graph Separation - Final Report}
 \maketitle
 \part*{Abstract}
-The problem of graph seperation is a well known problem in graph theory and has many applications.
+The problem of graph separation is a well known problem in graph theory and has many applications.
 There are currently no known algorithms that solve the problem accurately in polynomial time, and it is an open
 problem whether the class of isomorphic graphs is NP-complete.\\
-In this report, we applied the GIN netwrok presented by Xu [2] to find a partial solution to this problem, 
-similary to the 1-WL test.
+In this report, we applied the GIN network presented by Xu [2] to find a partial solution to this problem, 
+similarly to the 1-WL test.
 
 
 \part*{Introduction}
 In the theory of message passing networks (MPNs); a well known result states 
-that in the context of graph seperation - the expressive of the MPNs is equal to the 1-WL isomorphism test.
+that in the context of graph separation - the expressive of the MPNs is equal to the 1-WL isomorphism test.
 More accurately, MPNs is a general framework for graph neural networks that can be
-instatiated in many ways. While any realization of an MPN cannot separate
+instantiated in many ways. While any realization of an MPN cannot separate
 graphs unless they are separable by the WL isomorphism test, the converse
 claim can be showed to be true for specific MPN constructions. The two classical
 constructions of MPNs which are equivalent to WL are by Xu [2] and by
@@ -103,14 +103,15 @@ For any affine function $m(x) = ax + b $ there exists finite sub-multisets $X_1 
 \[ \sum_{x\in X_1}f(x) \neq \sum_{x\in X_2}f(x) \]
 \end{corollary}
 \begin{corollary}
-Note how 
+Since the MLP in the GIN uses a ReLU activation functions, as explained by Hanin \cite{Hanin}, the MLP is a piecewise linear function. 
+Thus, if the GIN uses a pooling layer is piecewise linear, as maximum or, then the GIN network represent a piecewise linear function.
 \end{corollary}
 
 
 
 \part*{Methods}
 \section*{Metrics}
-To determine the quality of seperation yeilded by the model, we have considered a few metrics.\\
+To determine the quality of separation yielded by the model, we have considered a few metrics.\\
 Note that we are using a finite size of $\mathcal{X}$ in these tests. Hence, $\mathcal{X}$
 is also a finite set in the definitions of these metrics (the metrics are a function of both the model and the test sample).
 \begin{itemize}
@@ -124,7 +125,7 @@ is also a finite set in the definitions of these metrics (the metrics are a func
         {|\mathcal{X}|}
     \]
 
-    This metric is the propotion between the number of elements 
+    This metric is the proportion between the number of elements 
     that are collided and the total number of elements in the test set.
     
     We will refer to this as the 'count metric'.
@@ -143,14 +144,14 @@ is also a finite set in the definitions of these metrics (the metrics are a func
 
 
 \section*{Training}
-Since we aim to prevert collisions, an intuative huristic at achiving this would be to keep
+Since we aim to pervert collisions, an intuitive hubristic at achieving this would be to keep
 outputs as distant as possible.
 Hence, we suggest the loss to be the negative distance between the outputs of the model:
 \[
     L(G_1,G_2)=-|M(G_1)-M(G_2)|    
 \]
 
-The actual training proccess for out GIN model, was done the same way as seen in  Xu [2].
+The actual training process for out GIN model, was done the same way as seen in  Xu [2].
 
 \section*{Dataset}
 To create our dataset we are randomly generating Erdos-Renyi graphs using the networkx library. The edge probabilities of
@@ -161,12 +162,12 @@ of nodes in each graph. We later test the effect of these parameters on the mode
 \subsection*{Parameters Effects on Untrained Models}
 The parameters have tested are the number of nodes in the graphs ,the edge probability and an additional parameter
 relates to the depth and width of neural network inside the GIN model; we call this parameter the 'network size'.
-The network size parameter dicatates both the depth and width of the neural network inside the GIN model in the following manner:
+The network size parameter dictates both the depth and width of the neural network inside the GIN model in the following manner:
 \begin{itemize}
     \item The depth of the neural network is the same as the 'network size' parameter.
     \item The width of the neural network is 32 times the 'network size' parameter.
 \end{itemize}
-Indeed these restrictions over the network seem quite arbitrary but we belive that while performance might be maximaized by
+Indeed these restrictions over the network seem quite arbitrary but we believe that while performance might be maximaized by
 a different set of restrictions, we will still be able to see the effect of the parameters on the model's performance with these restrictions.\\
 In order to estimate the effects of different parameters, we have applied grid sampling of the parameters.
 Each point in this grid was sampled with a set of 200 graphs.
@@ -176,14 +177,14 @@ In figures 1 to 6 we can see the effect of each parameter on each of the metrics
 The figures 1-3 relate to the collision count metric while figures 4-6 relate to the collision probability metric.
 We can see that an increase occurs In figures 1 and 4 we can see that the more edges we have - the more collisions we have.
 In figures 2 and 5 we see that the metrics values peek when the 'network size' is at 5,
-while the decrese in values grater than 5 are not dramatic.
-In figures 3 and 6 we see that the relation betweek the edge probability and the metrics is almost linear where the
+while the decrease in values grater than 5 are not dramatic.
+In figures 3 and 6 we see that the relation between the edge probability and the metrics is almost linear where the
 higher the edge probability - the higher are the metric values.
 
 \begin{figure}
     \begin{center}
         \includegraphics[width=7cm]{../figures/Collision_Count_edge_prob.png}\\
-        \caption{The effect of probability for the existance of an edge between two nodes on the model's collision count metric.}
+        \caption{The effect of probability for the existence of an edge between two nodes on the model's collision count metric.}
     \end{center}
 \end{figure}    
 \begin{figure}
@@ -201,7 +202,7 @@ higher the edge probability - the higher are the metric values.
 \begin{figure}
     \begin{center}
         \includegraphics[width=7cm]{../figures/Collision_Probability_edge_prob.png}\\
-        \caption{The effect of probability for the existance of an edge between two nodes on the model's collision probability metric.}
+        \caption{The effect of probability for the existence of an edge between two nodes on the model's collision probability metric.}
     \end{center}
 \end{figure}    
 \begin{figure}
@@ -221,7 +222,7 @@ higher the edge probability - the higher are the metric values.
 In this experiment, we set a parameter configuration and compare the model results between an untrained GIN model
 and the trained GIN model over a test set.
 As one can see, in figure 7, training the models had a
-meaningful effect on the model's performance in graph seperation; as measured by our metrics.
+meaningful effect on the model's performance in graph separation; as measured by our metrics.
 \begin{figure}
     \begin{center}
         \includegraphics[width=7cm]{../figures/Training_Performance_Bars.png}\\
@@ -235,29 +236,33 @@ meaningful effect on the model's performance in graph seperation; as measured by
 We can see that the both the node count and the edge probability parameter increase both metrics (meaning we get more collisions),
 while the network size parameter has a more complex effect on the metrics: smaller networks seem to be more capable of graph sepration
 when they are not trained.\\
-We can see that GIN's are capable of seperating graphs, and that these results can be further improved by training.
-Even after training, the seperation is not perfect, and we can see that the model still yeilds collisions.
+We can see that GIN's are capable of separating graphs, and that these results can be further improved by training.
+Even after training, the separation is not perfect, and we can see that the model still yields collisions.
 
 
 \part*{Future Work}
-As we have mentioned before, we still might want to try and get better speration using these GIN models,
-and we suspect there might be other loss functions which will enabe training the models to better suit
+As we have mentioned before, we still might want to try and get better separation using these GIN models,
+and we suspect there might be other loss functions which will enable training the models to better suit
 the metrics which we have defined. For example, the current loss function does not drop off it's value
 as the distance between the outputs of the model increases. This might be a problem, since we
 only care if the outputs are far enough apart, and not how far they are apart. Hence a we suggest trying to
 apply these experiments with a loss function which drops off as the distance between the outputs increases.\\
 Another interesting work that might be relevant here, would be to compare the results of the GIN model to
-the 1-WL test over the same datasets used here. In theory, the 1-WL test should have an equivalent expresive power as
+the 1-WL test over the same datasets used here. In theory, the 1-WL test should have an equivalent expressive power as
 the GIN model.\\
-Additonaly, it might be interesting to try these models out on 'real' datasets,
-rather than the syntehtic ones we have used here. \\
-In the conclusions we have mentioned that - perhaps suprizingly - smaller neural networks have yeiled function with better seperation ability when not trained,
+Additionally, it might be interesting to try these models out on 'real' datasets,
+rather than the synthetic ones we have used here. \\
+In the conclusions we have mentioned that - perhaps surprisingly - smaller neural networks have yielded function with better separation ability when not trained,
 an interesting followup might be to see why this is the case, and check whether this is any different when the models are trained.
 Finally, we might want to reconsider the restrictions we have placed on the network size parameter - and consider different option
-in an attempt to maximaized the GINs performance.
+in an attempt to maximized the GINs performance.
 
-\part*{References}
-[1] \href{https://arxiv.org/abs/2202.00645}{Morris, D. (2019). Message Passing Neural Networks. arXiv preprint arXiv:1910.00825.}
-[2] \href{https://arxiv.org/abs/2202.00645}{Xu, K., Li, W., \& Leskovec, J. (2019). How Powerful are Graph Neural Networks?. arXiv preprint arXiv:1810.00826.}
-[3] 
+\begin{thebibliography}{9}
+    \bibitem{Morris}
+    Morris, D. (2019). Message Passing Neural Networks. arXiv preprint arXiv:1910.00825.
+    \bibitem{Xu}
+    Xu, K., Li, W., \& Leskovec, J. (2019). How Powerful are Graph Neural Networks?. arXiv preprint arXiv:1810.00826.
+    \bibitem{Hanin}
+    Hanin, B., \& Rolnick, D. (2019). Complexity of Linear Regions in Deep Networks. ArXiv:1901.09021
+\end{thebibliography}
 \end{document}
