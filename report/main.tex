@@ -66,8 +66,8 @@ that in the context of graph seperation - the expressive of the MPNs is equal to
 More accurately, MPNs is a general framework for graph neural networks that can be
 instatiated in many ways. While any realization of an MPN cannot separate
 graphs unless they are separable by the WL isomorphism test, the converse
-claim can be showed to be true for specific MPN constructions. The two clas-
-sical constructions of MPNs which are equivalent to WL are by Xu [2] and by
+claim can be showed to be true for specific MPN constructions. The two classical
+constructions of MPNs which are equivalent to WL are by Xu [2] and by
 Morris [1].\\
 
 A key result for the proof of separation of GINs in Lemma 5. The lemma
@@ -90,7 +90,7 @@ univariate functions.
 \begin{lemma}
     Let $\mathcal{X}=\mathbb{Z}$, $m:\mathbb{R}\to\mathbb{R}$ is a continuous piecewise linear function,
     then there exist multi-sets $X_1 \neq X_2 \subseteq \mathcal{X}$ such that \\
-    \[ \sum_{x\in X_1}f(x) \neq \sum_{x\in X_2}f(x) \]
+    \[ \sum_{x\in X_1}m(x) \neq \sum_{x\in X_2}m(x) \]
 
 \end{lemma}
 $Proof:$ \\
@@ -101,6 +101,9 @@ $Proof:$ \\
 For any affine function $m(x) = ax + b $ there exists finite sub-multisets $X_1 \neq X_2 \subseteq \mathcal{X}$ such that
 
 \[ \sum_{x\in X_1}f(x) \neq \sum_{x\in X_2}f(x) \]
+\end{corollary}
+\begin{corollary}
+Note how 
 \end{corollary}
 
 
@@ -256,5 +259,5 @@ in an attempt to maximaized the GINs performance.
 \part*{References}
 [1] \href{https://arxiv.org/abs/2202.00645}{Morris, D. (2019). Message Passing Neural Networks. arXiv preprint arXiv:1910.00825.}
 [2] \href{https://arxiv.org/abs/2202.00645}{Xu, K., Li, W., \& Leskovec, J. (2019). How Powerful are Graph Neural Networks?. arXiv preprint arXiv:1810.00826.}
-
+[3] 
 \end{document}
