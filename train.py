@@ -245,7 +245,7 @@ def main():
 
 
     model = GraphCNN(**model_parms).to(device)
-
+    
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.5)
 
