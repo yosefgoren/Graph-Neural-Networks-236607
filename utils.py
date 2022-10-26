@@ -26,7 +26,7 @@ def calc_collision_stats(values, group_num = 10):
         p = collision_probability(data) 
         p_values.append(p)
     # print(p_values)
-    return np.mean(p_values), np.std(p_values), (np.mean(p_values) / np.std(p_values))  
+    return np.mean(p_values), np.std(p_values), (np.std(p_values) / np.mean(p_values))   
 
 
 class Experiemnt:
@@ -50,15 +50,19 @@ if __name__ == '__main__':
     with open('values.json', 'r') as f:
         values = json.load(f)
     
-    print("mean, std, mean/std")
+    print("mean, std, std/mean")
+
+    print(len(values))
 
     # calculate collision probability
     # print(collision_probability(values))
 
-    print(f"{calc_collision_stats(values)=}")
+    print(f"{calc_collision_stats(values, 5)=}")
 
-    print(f"{calc_collision_stats(values, 25)=}")
+    print(f"{calc_collision_stats(values, 10)=}")
 
-    print(f"{calc_collision_stats(values, 100)=}")
+    # print(f"{calc_collision_stats(values, 25)=}")
+
+    # print(f"{calc_collision_stats(values, 100)=}")
 
 
