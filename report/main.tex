@@ -56,7 +56,7 @@
 \part*{Abstract}
 The problem of graph separation is a well known problem in graph theory and has many applications.
 There are currently no known algorithms that solve the problem accurately in polynomial time, and it is an open
-problem whether the class of isomorphic graphs is NP-complete.\\
+problem whether the 'language' of pairs of isomorphic graphs is NP-complete.\\
 In this report, we applied the GIN network presented by Xu [2] to find a partial solution to this problem, 
 similarly to the 1-WL test.
 Code has been made available at: \url{https://github.com/yosefgoren/Graph-Neural-Networks-236607.git}
@@ -64,7 +64,7 @@ Code has been made available at: \url{https://github.com/yosefgoren/Graph-Neural
 
 \part*{Introduction}
 In the theory of message passing networks (MPNs); a well known result states 
-that in the context of graph separation - the expressive of the MPNs is equal to the 1-WL isomorphism test.
+that in the context of graph separation - the expressive power of the MPNs is equal to the 1-WL isomorphism test.
 More accurately, MPNs is a general framework for graph neural networks that can be
 instantiated in many ways. While any realization of an MPN cannot separate
 graphs unless they are separable by the WL isomorphism test, the converse
@@ -72,9 +72,7 @@ claim can be showed to be true for specific MPN constructions. The two classical
 constructions of MPNs which are equivalent to WL are by Xu [2] and by
 Morris [1].\\
 
-A key result for the proof of separation of GINs in Lemma 5. The lemma
-states that if $\mathcal{X}$ is a countable set and N is a fixed natural number, there
-A key result for the proof of separation of GINs in Lemma 5. The lemma
+A key result for the proof of separation of GINs lies in Lemma 5. The lemma
 states that if $\mathcal{X}$ is a countable set and N is a fixed natural number, there
 exists a function $f : \mathcal{X} \rightarrow R$ such that, for every $X_1, X_2 \subseteq \mathcal{X}$
 of size $<$ N,
@@ -92,7 +90,7 @@ univariate functions.
 \begin{lemma}
     Let $\mathcal{X}=\mathbb{Z}$, $m:\mathbb{R}\to\mathbb{R}$ is a continuous piecewise linear function,
     then there exist multi-sets $X_1 \neq X_2 \subseteq \mathcal{X}$ such that \\
-    \[ \sum_{x\in X_1}m(x) \neq \sum_{x\in X_2}m(x) \]
+    \[ \sum_{x\in X_1}m(x) = \sum_{x\in X_2}m(x) \]
 
 \end{lemma}
 $Proof:$ \\
@@ -102,11 +100,11 @@ $Proof:$ \\
 \begin{corollary}
 For any affine function $m(x) = ax + b $ there exists finite sub-multisets $X_1 \neq X_2 \subseteq \mathcal{X}$ such that
 
-\[ \sum_{x\in X_1}f(x) \neq \sum_{x\in X_2}f(x) \]
+\[ \sum_{x\in X_1}f(x) = \sum_{x\in X_2}f(x) \]
 \end{corollary}
 \begin{corollary}
 Since the MLP in the GIN uses a ReLU activation functions, as explained by Hanin \cite{Hanin}, the MLP is a piecewise linear function. 
-Thus, if the GIN uses a pooling layer is piecewise linear, as maximum or, then the GIN network represent a piecewise linear function.
+Thus, if the GIN uses a pooling layer which is piecewise linear, as maximum or average - then the GIN network represent a piecewise linear function.
 \end{corollary}
 
 
@@ -153,17 +151,15 @@ Hence, we suggest the loss to be the negative distance between the outputs of th
     L(G_1,G_2)=-|M(G_1)-M(G_2)|    
 \]
 
-The actual training process for out GIN model, was done the same way as seen in  Xu [2].
-
 \section*{Dataset}
 To create our dataset we are randomly generating Erdos-Renyi graphs using the networkx library. The edge probabilities of
-these graphs is a parameter of the dataset. An additional parameter of the detaset is ofcourse is the number
+these graphs is a parameter of the dataset. An additional parameter of the detaset is of course is the number
 of nodes in each graph. We later test the effect of these parameters on the model's performance.\\
 
 \part*{Experiments}
 \subsection*{Parameters Effects on Untrained Models}
-The parameters have tested are the number of nodes in the graphs ,the edge probability and an additional parameter
-relates to the depth and width of neural network inside the GIN model; we call this parameter the 'network size'.
+The parameters we have tested are the number of nodes in the graphs ,the edge probability and an additional parameter
+relates to the depth and width of the neural network inside the GIN model; we call this parameter the 'network size'.
 The network size parameter dictates both the depth and width of the neural network inside the GIN model in the following manner:
 \begin{itemize}
     \item The depth of the neural network is the same as the 'network size' parameter.
@@ -235,7 +231,7 @@ meaningful effect on the model's performance in graph separation; as measured by
 
 
 \part*{Conclusion}
-We can see that the both the node count and the edge probability parameter increase both metrics (meaning we get more collisions),
+We can see that both the node count and the edge probability parameters increase both metrics (meaning we get more collisions),
 while the network size parameter has a more complex effect on the metrics: smaller networks seem to be more capable of graph sepration
 when they are not trained.\\
 We can see that GINs are capable of separating graphs, and that these results can be further improved by training.
@@ -254,7 +250,7 @@ the 1-WL test over the same datasets used here. In theory, the 1-WL test should 
 the GIN model.\\
 Additionally, it might be interesting to try these models out on 'real' datasets,
 rather than the synthetic ones we have used here. \\
-In the conclusions we have mentioned that - perhaps surprisingly - smaller neural networks have yielded function with better separation ability when not trained,
+In the conclusions we have mentioned that - perhaps surprisingly - smaller neural networks have yielded functions with better separation ability when not trained,
 an interesting followup might be to see why this is the case, and check whether this is any different when the models are trained.
 Finally, we might want to reconsider the restrictions we have placed on the network size parameter - and consider different option
 in an attempt to maximized the GINs performance.
