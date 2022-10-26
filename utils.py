@@ -50,8 +50,10 @@ if __name__ == '__main__':
     with open('values.json', 'r') as f:
         values = json.load(f)
     
+    print("mean, std, mean/std")
+
     # calculate collision probability
-    print(collision_probability(values))
+    # print(collision_probability(values))
 
     print(f"{calc_collision_stats(values)=}")
 
